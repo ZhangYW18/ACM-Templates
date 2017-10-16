@@ -1,50 +1,35 @@
 struct query {  
-    int type,pos,id,pre,val;  
+    int p,a,b,id,l[2];  
+    db g[2];  
     bool operator< (const query &x) const {  
-        return pos<x.pos || (pos==x.pos&&type<x.type);  
+        return id<x.id;  
     }  
 };  
-query q[maxn*7],tem[maxn*7];  
-  
-int lowbit(int x) {  
-    return x&(-x);  
-}  
-  
-ll getsum(int tt) {  
-    ll sum=0;  
-    for (int t=tt;t;t-=lowbit(t))   
-        sum+=f[t];  
-    return sum;  
-}  
-  
-void update(int tt,ll c) {  
-    int t=tt;  
-    for (int t=tt;t<=N;t+=lowbit(t))  
-        f[t]+=c;  
-}  
-  
-void cdq(int l,int r) {  
+query q[maxn],tem[maxn];   
+
+void cdq(int l,int r,int p) {  
+    if (l==r) {  
+        if (q[l].l[p] < 1)   
+            q[l].l[p] = 1, q[l].g[p] = 1.0;  
+        return;  
+    }  
     int mid=(l+r)/2;  
-    if (l!=r) cdq(l,mid),cdq(mid+1,r);  
-    int h=l,t=mid+1,cnt=0;  
-    while (h<=mid&&t<=r) {  
-        if (q[h]<q[t]) {  
-            if (q[h].type==1) update(q[h].id,q[h].pre);  
-            tem[cnt++]=q[h++];  
-        } else {  
-            if (q[t].type==2) ans[q[t].val]-=getsum(q[t].pre)-getsum(q[t].id-1);  
-                else if (q[t].type==3) ans[q[t].val]+=getsum(q[t].pre)-getsum(q[t].id-1);  
-            tem[cnt++]=q[t++];  
-        }  
+    memcpy(tem+l,q+l,sizeof(query)*(r-l+1));  
+    int h=l,t=mid+1;  
+    for (int i=l;i<=r;i++)  (tem[i].p<=mid?q[h++]:q[t++])=tem[i];  
+    cdq(l,mid,p);  
+    num++;  
+    h=l,t=mid+1;  
+    for (int i=mid+1;i<=r;i++)  
+    {  
+        while (h<=mid&&q[h].id<q[i].id)   
+            update(q[h].b,q[h].l[p],q[h].g[p]),h++;  
+        Tree now=gettree(q[i].b);  
+        if (!now.l) continue;  
+        if (now.l+1>q[i].l[p])  q[i].l[p]=now.l+1,q[i].g[p]=now.g;  
+            else if (now.l+1==q[i].l[p]) q[i].g[p]+=now.g;  
     }  
-    int o=h;  
-    for (;h<=mid;h++)  
-        tem[cnt++]=q[h];  
-    for (;t<=r;t++) {  
-        if (q[t].type==2) ans[q[t].val]-=getsum(q[t].pre)-getsum(q[t].id-1);  
-            else if (q[t].type==3) ans[q[t].val]+=getsum(q[t].pre)-getsum(q[t].id-1);  
-        tem[cnt++]=q[t];  
-    }  
-    for (int i=l;i<o;i++) if (q[i].type==1) update(q[i].id,-q[i].pre);  
-    for (int i=0;i<cnt;i++) q[l+i]=tem[i];  
+    cdq(mid+1,r,p);  
+    merge(q+l,q+mid+1,q+mid+1,q+r+1,tem+l);  
+    memcpy(q+l,tem+l,sizeof(query)*(r-l+1));  
 }  
