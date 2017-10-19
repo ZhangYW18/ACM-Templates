@@ -39,6 +39,12 @@ class SAM {
         }  
         last=now;  
     }  
+    int getfa(int n) {
+    	return a[n].fa;
+    }
+    int getlen(int n) {
+    	return a[n].len;
+    }
     void getnum() {
     	return num;
     }
@@ -54,6 +60,15 @@ class SAM {
 };  
 SAM sa;  
 
+int w[maxn*2],r[maxn*2];
+void topsort() {
+    int m=sa.getnum();
+    mem0(w);
+    for(i=0;i<=m;i++) w[sa.getlen(i)]++;  
+    for(i=0;i<=len;i++) w[i]+=w[i-1];  
+    for(i=m;i>=0;i--) r[--w[sa.getlen(i)]]=i;  
+}
+	
 int main() {
 	
 	return 0;
