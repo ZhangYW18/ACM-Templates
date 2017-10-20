@@ -45,10 +45,10 @@ class SAM {
     int getlen(int n) {
     	return a[n].len;
     }
-    void getnum() {
+    int getnum() {
     	return num;
     }
-    void getson(int n,int c) {
+    int getson(int n,int c) {
     	return a[n].son[c];
     }
     private:  
@@ -62,11 +62,20 @@ SAM sa;
 
 int w[maxn*2],r[maxn*2];
 void topsort() {
-    int m=sa.getnum();
+    int m=sa.getnum(),i;
     mem0(w);
     for(i=0;i<=m;i++) w[sa.getlen(i)]++;  
     for(i=0;i<=len;i++) w[i]+=w[i-1];  
     for(i=m;i>=0;i--) r[--w[sa.getlen(i)]]=i;  
+    int now=0; 
+    for (i=0;i<len;i++) {
+	now=sa.getson(now,s[i]-'a');
+	dp[now]++;
+    }
+    for (i=m;i>0;i--) {
+    	int to=sa.getfa(r[i]);
+    	if (to!=-1) dp[to]+=dp[r[i]]; 
+    }
 }
 	
 int main() {
