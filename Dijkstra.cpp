@@ -20,7 +20,7 @@ void addedge(int f,int t,int d) {
 	edge[num].pre=head[t];head[t]=num++;
 }
 
-int dj(int s,int t) {
+int dj(int n,int s,int t) {
 	int j,i;
 	mem0(visit);
 	priority_queue<node> pq;
@@ -28,7 +28,7 @@ int dj(int s,int t) {
 	for (j=head[s];j!=-1;j=edge[j].pre) 
 		pq.push(node(j,edge[j].dist));
 	meminf(dist);dist[s]=0;
-	while (!pq.empty()) {
+	for (int k=1;k<n;k++) {
 		if (pq.top().dist>ans) break;
 		i=pq.top().id;
 		int to=edge[i].to;
