@@ -20,28 +20,28 @@ void addedge(int f,int t,int d) {
 	edge[num].pre=head[t];head[t]=num++;
 }
 
-int dj(int k) {
-	int ans=inf,j,i;
-	mem0(mark);
-	meminf(dist);
-	while (!pq.empty()) {
-		i=pq.top().id;
-		int from,to;
-		from=edge[i].from;
-		to=edge[i].to;
-		pq.pop();
-		if (edge[i].dist+dist[from]<dist[to]) {
-			dist[to]=edge[i].dist+dist[from];
-				for (j=head[to];j!=-1;j=edge[j].pre) {
-		        	if (!mark[j]) {
-		        		if (edge[j].from==to)
-						    pq.push(node(j,edge[j].dist+dist[to]));
-				        else 
-						    pq.push(node(j^1,edge[j].dist+dist[to]));
-		            	mark[j]=mark[j^1]=1;
-		         	}
-	        	}
-		}
+int dj(int s,int t) {
+	int j,i;
+	mem0(mark);mem0(visit);
+	priority_queue<node> pq;
+	visit[s]=1;
+	for (j=head[s];j!=-1;j=edge[j].pre) {
+		pq.push(node(j,edge[j].dist));
+		mark[j]=mark[j^1]=1;
 	}
-	return dist[0];
+	meminf(dist);dist[s]=0;
+	while (!pq.empty()) {
+		if (pq.top().dist>ans) break;
+		i=pq.top().id;
+		if (visit[edge[i].to]) continue;
+		visit[to]=1;
+		pq.pop();
+		dist[to]=edge[i].dist+dist[edge[i].from];
+		for (j=head[to];j!=-1;j=edge[j].pre) 
+			if (!visit[edge[j].to]&&!mark[j]) 
+				pq.push(node(j,dist[to]+edge[j].dist));
+				mark[j]=mark[j^1]=1;
+			}
+	}
+	return dist[t];
 }
