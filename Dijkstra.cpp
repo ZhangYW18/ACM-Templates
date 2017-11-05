@@ -22,26 +22,23 @@ void addedge(int f,int t,int d) {
 
 int dj(int s,int t) {
 	int j,i;
-	mem0(mark);mem0(visit);
+	mem0(visit);
 	priority_queue<node> pq;
 	visit[s]=1;
-	for (j=head[s];j!=-1;j=edge[j].pre) {
+	for (j=head[s];j!=-1;j=edge[j].pre) 
 		pq.push(node(j,edge[j].dist));
-		mark[j]=mark[j^1]=1;
-	}
 	meminf(dist);dist[s]=0;
 	while (!pq.empty()) {
 		if (pq.top().dist>ans) break;
 		i=pq.top().id;
-		if (visit[edge[i].to]) continue;
+		int to=edge[i].to;
+		if (visit[to]) continue;
 		visit[to]=1;
 		pq.pop();
 		dist[to]=edge[i].dist+dist[edge[i].from];
 		for (j=head[to];j!=-1;j=edge[j].pre) 
-			if (!visit[edge[j].to]&&!mark[j]) 
+			if (!visit[edge[j].to]) 
 				pq.push(node(j,dist[to]+edge[j].dist));
-				mark[j]=mark[j^1]=1;
-			}
 	}
 	return dist[t];
 }
