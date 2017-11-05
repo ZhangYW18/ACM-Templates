@@ -34,10 +34,10 @@ int dj(int s,int t) {
 		int to=edge[i].to;
 		if (visit[to]) continue;
 		visit[to]=1;
+		dist[to]=pq.top().dist;
 		pq.pop();
-		dist[to]=edge[i].dist+dist[edge[i].from];
 		for (j=head[to];j!=-1;j=edge[j].pre) 
-			if (!visit[edge[j].to]) 
+			if (!visit[edge[j].to]&&dist[to]+edge[j].dist<ans) 
 				pq.push(node(j,dist[to]+edge[j].dist));
 	}
 	return dist[t];
