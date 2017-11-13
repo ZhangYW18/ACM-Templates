@@ -69,8 +69,8 @@ void topsort() {
     for(i=m;i>=0;i--) r[--w[sa.getlen(i)]]=i;  
     int now=0; 
     for (i=0;i<len;i++) {
-	now=sa.getson(now,s[i]-'a');
-	dp[now]++;
+		now=sa.getson(now,s[i]-'a');
+		dp[now]++;
     }
     for (i=m;i>0;i--) {
     	int to=sa.getfa(r[i]);
