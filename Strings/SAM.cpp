@@ -59,7 +59,7 @@ class SAM {
     } a[maxn*2];  
 };  
 SAM sa;  
-
+//求right集合大小
 int w[maxn*2],r[maxn*2];
 void topsort() {
     int m=sa.getnum(),i;
