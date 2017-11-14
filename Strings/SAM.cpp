@@ -10,16 +10,21 @@ typedef double db;
 const int maxn=100005,maxk=26,inf=0x3f3f3f3f;  
 const ll llinf=0x3f3f3f3f3f3f3f3f;
 
-class SAM {  
-    public:  
+struct SAM {  
+	int num,last,maxlen;  
+    struct node{  
+        int len,fa;  
+        int son[maxk];  
+    } a[maxn*2];  
     void init() {  
-        num=last=0;  
+        num=last=maxlen=0;  
         a[0].len=0;a[0].fa=-1;  
         for (int i=0;i<maxk;i++) a[0].son[i]=-1;  
     }  
     void update (int c) {  
         int now=++num,p;  
-        a[now].len=a[last].len+1;  
+        a[now].len=a[last].len+1;
+		maxlen=max(maxlen,a[now].len);
         memset(a[now].son,-1,sizeof(a[now].son));  
         for (p=last;p!=-1&&a[p].son[c]==-1;p=a[p].fa)  
             a[p].son[c]=now;  
@@ -29,7 +34,8 @@ class SAM {
                 a[now].fa=q;  
             } else {  
                 int ne=++num;  
-                a[ne].len=a[p].len+1;  
+                a[ne].len=a[p].len+1;
+				maxlen=max(maxlen,a[ne].len);  
                 memcpy(a[ne].son,a[q].son,sizeof(a[q].son));  
                 a[ne].fa=a[q].fa;  
                 for (;p!=-1&&a[p].son[c]==q;p=a[p].fa)   
@@ -51,14 +57,8 @@ class SAM {
     int getson(int n,int c) {
     	return a[n].son[c];
     }
-    private:  
-    int num,last;  
-    struct node{  
-        int len,fa;  
-        int son[maxk];  
-    } a[maxn*2];  
 };  
-SAM sa;  
+SAM sa;
 //求right集合大小
 int w[maxn*2],r[maxn*2];
 void topsort() {
