@@ -79,7 +79,7 @@ void insert(string s,int root,int len) {
 	for (i=0;i<len;i++) {
 		int pos=s[i]-'a';
 		if (a[now].next[pos]==-1) {
-	    	a[now].next[pos]=num++;
+	    	a[now].next[pos]=++num;
 	    	a[num].init();
     	}
     	now=a[now].next[pos];
@@ -118,4 +118,18 @@ void buildfail(int root) {
 	}
 }
 
-
+void search(string s,int root,int len) {  
+    int k=0,i;  
+    int p=root,now;  
+    for (i=0;i<len;i++) {
+        p=a[p].next[s[i]-'a'];  
+        now=p;  
+        while (now!=root&&a[now].cnt!=-1) {  
+            if (a[now].cnt) {
+            	b[i-a[now].len+1]++;
+            	b[i+1]--;
+            }
+            now=a[now].fail;  
+        }
+    }
+}  
