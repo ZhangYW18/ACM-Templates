@@ -20,7 +20,15 @@ ll lukas(ll n,ll m){
 }  
 
 //阶乘逆元：inv[n!]=inv[(n+1)!]*(n+1)
-
+    fac[1]=1;
+	for (i=2;i<=n;i++) {
+		fac[i]=(fac[i-1]*i)%mod;
+	}
+	inv[n]=fastpow(fac[n],mod-2);  
+    for (i=n-1;i>=0;i--) {  
+        inv[i]=inv[i+1]*(i+1);  
+        inv[i]%=mod;  
+    }  
     inv[n]=fastpow(fac[n],mod-2);  
     for (i=g-1;i>=0;i--) {  
         inv[i]=inv[i+1]*(i+1);  
