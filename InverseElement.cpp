@@ -5,7 +5,7 @@ ll fastpow(ll base,ll index) {
     ll sum=base,ans=1;  
     ll i=index;  
     while (i) {  
-        if (i%2) ans=(an*sum)%mod;  
+        if (i%2) ans=(ans*sum)%mod;  
         sum*=sum;  
         sum=sum%mod;  
         i/=2;  
