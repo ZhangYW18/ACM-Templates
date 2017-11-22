@@ -1,19 +1,19 @@
 // 大组合数逆元 
-// 分母的mod-2次方  (mod为素数)
+// 费马小定理分母的mod-2次方  (mod为素数)
 
-long long fastpow(long long base,long long index) {  
-    long long sum=base,an=1;  
-    long long i=index;  
+ll fastpow(ll base,ll index) {  
+    ll sum=base,ans=1;  
+    ll i=index;  
     while (i) {  
-        if (i%2) an=(an*sum)%mod;  
+        if (i%2) ans=(an*sum)%mod;  
         sum*=sum;  
         sum=sum%mod;  
         i/=2;  
     }  
-    return an;  
+    return ans;  
 }  
-  
-long long lucas(long long n,long long m){  
+//组合数公式
+ll lukas(ll n,ll m){  
     if (n<m) {  
         return 0;  
     } else return p[n]*(fastpow((p[m]*p[n-m])%mod,mod-2)%mod)%mod;  
