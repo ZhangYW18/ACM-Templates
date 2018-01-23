@@ -18,6 +18,6 @@ void buildnext(char s[]) {
 	     	   j=next[j];
 	   	 if (k[j]==s[i]) j++;
 	   	 if (j==lenk) {
-			ans++;k=next[j];
+			ans++;j=next[j];
 		 }
 	}
