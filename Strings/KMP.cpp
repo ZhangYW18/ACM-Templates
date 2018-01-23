@@ -11,7 +11,7 @@ void buildnext(char s[]) {
 		next[i+1]=j;
 	}
 }
-
+	buildnext(k);
 	j=0;
 	for (i=0;i<lens;i++) {
 	    	while (j>0&&k[j]!=s[i]) 
