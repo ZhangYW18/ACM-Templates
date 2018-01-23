@@ -12,10 +12,12 @@ void buildnext(char s[]) {
 	}
 }
 
-      j=0;
-	    for (i=0;i<lens;i++) {
-	    	while (j>0&&k[j]!=s[i]) 
-	    	    j=next[j];
-	    	if (k[j]==s[i]) j++;
-	    	if (j==lenk) ans++;
-	    }
+	j=0;
+	for (i=0;i<lens;i++) {
+	    while (j>0&&k[j]!=s[i]) 
+	        j=next[j];
+	    if (k[j]==s[i]) j++;
+	    if (j==lenk) {
+			j++;k=next[j];
+		}
+	}
