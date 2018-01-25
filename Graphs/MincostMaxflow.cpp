@@ -53,7 +53,7 @@ int mincostmaxflow(int s,int t) {
             now=path[edge[now].from];  
 //          cout << edge[i].from << ' ' << edge[i].to << ' ' << edge[i].cost << ' ' << edge[i].flow << ' ' << endl;  
         }  
-        sum+=f;  
+        sum+=f*rflow[t];  
     }  
     return sum;  
 }  
