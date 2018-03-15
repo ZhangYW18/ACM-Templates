@@ -1,6 +1,7 @@
 
 int head[maxn],size[maxn],ms[maxn];
 int num=0,root=-1,rs=inf,sum;
+int ans=0;
 bool visit[maxn];
 
 struct Edge {
