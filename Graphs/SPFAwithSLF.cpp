@@ -2,10 +2,10 @@ ll spfa(int s,int des){
 	int i;
     memset(inque,0,sizeof(inque));
     memset(dist,0x3f,sizeof(dist));
-	inque[1]=1;
+	inque[s]=1;
 	deque<int> q;
-	q.push_back(1);
-	dist[1]=0;
+	q.push_back(s);
+	dist[s]=0;
 	while (!q.empty()) {
 		int now=q.front();
 		q.pop_front();
