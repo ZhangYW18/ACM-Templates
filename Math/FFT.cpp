@@ -21,12 +21,12 @@ struct complex
 complex conj(complex a) {
 	return complex(a.r, -a.i);
 }
-complex a[maxn*2], b[maxn*2];
-int ans[maxn*2];
+complex a[maxn*4], b[maxn*4];
+int ans[maxn*4];
 
 struct fff {
-	int n, rev[maxn*2];
-	complex o[maxn*2], oi[maxn*2];
+	int n, rev[maxn*4];
+	complex o[maxn*4], oi[maxn*4];
 
 	void init(int m) {
 		n = 1; 
