@@ -11,7 +11,7 @@ priority_queue<node> pq;
 struct Edge {
 	int from,to,dist,pre;
 };
-Edge edge[maxk];
+Edge edge[maxk*2];
 
 void addedge(int f,int t,int d) {
 	edge[num].from=f;edge[num].to=t;edge[num].dist=d;
