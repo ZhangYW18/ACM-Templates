@@ -7,17 +7,6 @@ struct node {
 };
 priority_queue<node> pq;
 
-struct Edge {  
-    int from,to,pre;
-	ll dist;  
-};  
-Edge edge[maxk*2];  
-
-void addedge(int from,int to,ll dist) {  
-    edge[num]=(Edge){from,to,head[from],dist};  
-    head[from]=num++;
-}  
-
 ll dij(int n,int s,int t) {
 	int j,i;
 	mem0(visit);
