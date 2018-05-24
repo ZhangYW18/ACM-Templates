@@ -12,7 +12,7 @@ struct Edge {
 	ll dist;  
 };  
 Edge edge[maxk*2];  
-  
+
 void addedge(int from,int to,ll dist) {  
     edge[num]=(Edge){from,to,head[from],dist};  
     head[from]=num++;
