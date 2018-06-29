@@ -3,11 +3,13 @@
 最后跑最大流，如果新源点出发的所有边都满流，则存在可行流。   */
 
 //dinic算法
+//s为原点,n为汇点
+int head[maxn],current[maxn],dist[maxn];
 
 struct Edge {  
     int from,to,flow,pre;  
 };  
-Edge edge[maxk];  
+Edge edge[maxk*2];  
   
 void addedge(int from,int to,int flow) {  
     edge[num]=(Edge){from,to,flow,head[from]};  
@@ -16,11 +18,11 @@ void addedge(int from,int to,int flow) {
     head[to]=num++;  
 }  
   
-bool bfs (int n) {  
+bool bfs (int s,int n) {  
     queue<int> q;  
-    q.push(0);  
+    q.push(s);  
     memset(dist,-1,sizeof(dist));  
-    dist[0]=0;  
+    dist[s]=0;  
     while (!q.empty()) {  
         int now=q.front();  
         q.pop();  
@@ -41,8 +43,7 @@ int dfs(int now,int flow,int n) {
     for (int i=current[now];i!=-1;i=edge[i].pre) {  
         int to=edge[i].to;  
         current[now]=i;  
-        if (dist[now]+1==dist[to]&&edge[i].flow>0&&  
-        (f=dfs(to,min(flow,edge[i].flow),n))) {  
+        if (dist[now]+1==dist[to]&&edge[i].flow>0&&(f=dfs(to,min(flow,edge[i].flow),n))) {  
             edge[i].flow-=f;  
             edge[i^1].flow+=f;  
             return f;  
@@ -51,11 +52,11 @@ int dfs(int now,int flow,int n) {
     return 0;  
 }  
   
-int dinic(int n) {  
+int dinic(int s,int n) {  
     int sum=0,f;  
-    while (bfs(n)) {  
+    while (bfs(s,n)) {  
         memcpy(current,head,sizeof(head));  
-        while (f=dfs(0,inf,n)) sum+=f;  
+        while (f=dfs(s,inf,n)) sum+=f;  
     }  
     return sum;  
 }  
