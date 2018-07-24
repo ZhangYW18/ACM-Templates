@@ -1,4 +1,4 @@
-//Treap支持在logn时间内完成询问排名、询问第k大数、询问前驱、询问后继的操作
+//Treap支持在logn时间内完成插入、删除、询问排名、询问第k大数、询问前驱、询问后继、区间加减的操作
 //无旋Treap支持Split/Merge操作
 #include<iostream>
 #include<cstdio>
