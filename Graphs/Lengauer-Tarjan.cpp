@@ -1,6 +1,6 @@
 //求出支配点，构建支配树
 //除原点连边idom[i]->i
-
+//可近似认为时间复杂度线性
 #include <bits/stdc++.h>
 using namespace std;
 inline int read()
