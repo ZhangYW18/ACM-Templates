@@ -23,6 +23,6 @@ void myhash(int n) {
 	}
 }
 
-ll gethash(int l,int r) {
+ull gethash(int l,int r) {
     return (((hash[r]-hash[l-1]*fac[r-l+1])%mod)+mod)%mod;
 }
