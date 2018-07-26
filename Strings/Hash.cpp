@@ -11,7 +11,7 @@ ull hash() {
 
 //可截取区间的哈希
 ull fac[maxn],hsh[maxn],fac2[maxn],hsh2[maxn];
-unordered_map<ll,int> mp,mp2;
+unordered_map<ull,int> mp,mp2;
 const ull seed=100001651,seed2=63218479;
 void myhash(int n) {
     fac[0]=fac2[0]=1;hsh[0]=hsh2[0]=0;
