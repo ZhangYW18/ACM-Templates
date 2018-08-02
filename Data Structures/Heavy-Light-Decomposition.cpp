@@ -1,3 +1,6 @@
+int size[maxn],son[maxn],fa[maxn],top[maxn],dep[maxn],dfn[maxn];
+bool visit[maxn];
+
 int dfs(int now,int step) {  
     visit[now]=1;son[now]=-1;size[now]=1;dep[now]=step;  
     int i;  
@@ -11,6 +14,8 @@ int dfs(int now,int step) {
     }  
     return size[now];  
 }  
+  
+mem0(visit);num=0;
   
 void dfs2(int now,int gr) {  
     top[now]=gr;  

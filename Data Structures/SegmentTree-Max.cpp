@@ -1,3 +1,5 @@
+num=1;
+
 //可修改线段树区间最值模板
 struct Tree {
 	int lc,rc,l,r,max,tag;

@@ -14,10 +14,10 @@ int findlca(int a,int b) {
     int x=a,y=b,i;  
     if (dep[x]>dep[y]) swap(x,y);  
     for (i=18;i>=0;i--)
-        if (dep[mfa[y][i]]>=dep[x]) y=mfa[y][i];  
+        if (dep[fa[y][i]]>=dep[x]) y=fa[y][i];  
     if (y==x) return x;  
     for (i=18;i>=0;i--)
-        if (mfa[y][i]!=mfa[x][i]&&mfa[x][i]!=0&&mfa[y][i]!=0)
-            x=mfa[x][i];y=mfa[y][i];  
-    return mfa[x][0];  
+        if (fa[y][i]!=fa[x][i]&&fa[x][i]!=0&&fa[y][i]!=0)
+            x=fa[x][i],y=fa[y][i];  
+    return fa[x][0];  
 }  

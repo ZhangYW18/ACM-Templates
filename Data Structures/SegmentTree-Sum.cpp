@@ -1,3 +1,6 @@
+
+num=1;
+
 struct Tree {
 	int lc,rc,l,r,sum,tag;
 };

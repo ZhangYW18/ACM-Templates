@@ -1,4 +1,9 @@
 //spfa实现最小费用最大流
+int head[maxn],dist[maxn],path[maxn],rflow[maxn];
+bool inque[maxn];
+int num=0;
+num=0;memset(head,-1,sizeof(head));
+
 struct Edge {  
     int from,to,cost,flow,pre;  
 };  
