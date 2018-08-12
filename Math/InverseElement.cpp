@@ -16,10 +16,12 @@ ll fastpow(ll base,ll index) {
 ll lukas(ll n,ll m){  
     if (n<m) {  
         return 0;  
-    } else return p[n]*(fastpow((p[m]*p[n-m])%mod,mod-2)%mod)%mod;  
+    } else return fac[n]*(fastpow((fac[m]*fac[n-m])%mod,mod-2)%mod)%mod;  
 }  
 
 //阶乘逆元：inv[n!]=inv[(n+1)!]*(n+1)
+ll fac[maxn],inv[maxn];
+
     fac[1]=1;
 	for (i=2;i<=n;i++) {
 		fac[i]=(fac[i-1]*i)%mod;
@@ -29,8 +31,4 @@ ll lukas(ll n,ll m){
         inv[i]=inv[i+1]*(i+1);  
         inv[i]%=mod;  
     }  
-    inv[n]=fastpow(fac[n],mod-2);  
-    for (i=g-1;i>=0;i--) {  
-        inv[i]=inv[i+1]*(i+1);  
-        inv[i]%=mod;  
-    }  
+    
