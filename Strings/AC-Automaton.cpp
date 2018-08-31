@@ -53,6 +53,7 @@ void buildfail(int root) {
 void buildfail(int root) {
 	int p=root;
 	int front=0,tail=0,i;
+	a[0].fail=0;
 	for (i=0;i<maxk;i++) {
 		if (a[p].next[i]!=-1) {
 			a[a[p].next[i]].fail=root;
