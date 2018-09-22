@@ -1,63 +1,125 @@
-
-num=1;
-
-struct Tree {
-	int lc,rc,l,r,sum,tag;
+//N个数排成一列，有三种操作。1.给一段区间内的每个数乘上一个非负整数。2.给一段区间内的每个数加上一个非负整数.3.询问一段区间的和模上P的值。
+#include <cstdio>
+#include <iostream>
+#include <string.h>
+using namespace std;
+typedef long long ll;
+const int maxn=100500;
+int num;
+struct ttree {
+	int lc,rc,l,r;
+	ll tag,sum,mul;
 };
-Tree tree[4*maxn];
+ttree tree[4*maxn];
+ll p;
 
-void build(int now,int l,int r,int c) {
+void build(int now,int l,int r) {
 	tree[now].l=l;
 	tree[now].r=r;
-	tree[now].tag=-1;
+	tree[now].tag=0;
+	tree[now].mul=1;
 	if (l!=r) {
 		num++;
 		tree[now].lc=num;
-		build(num,l,(l+r)/2,c);
+		build(num,l,(l+r)/2);
 		num++;
 		tree[now].rc=num;
-		build(num,(l+r)/2+1,r,c);
+		build(num,(l+r)/2+1,r);
 		tree[now].sum=tree[tree[now].lc].sum+tree[tree[now].rc].sum;
-	} else tree[now].sum=a[l]>=c?1:0;
+		tree[now].sum%=p;
+	} else scanf("%lld",&tree[now].sum);
 }
 
 void pushdown(int now) {
-	if (tree[now].tag==-1) return;
-	int l=tree[now].lc,r=tree[now].rc;
-	tree[l].tag=tree[now].tag;
-	tree[r].tag=tree[now].tag;
-	tree[l].sum=tree[now].tag*(tree[l].r-tree[l].l+1);
-	tree[r].sum=tree[now].tag*(tree[r].r-tree[r].l+1);
-	tree[now].tag=-1;
+	int l=tree[now].lc;
+	int r=tree[now].rc;
+	tree[l].tag=(tree[l].tag*tree[now].mul+tree[now].tag)%p;
+	tree[r].tag=(tree[r].tag*tree[now].mul+tree[now].tag)%p;
+	tree[l].mul*=tree[now].mul;
+	tree[l].mul%=p;
+	tree[r].mul*=tree[now].mul;
+	tree[r].mul%=p;
+	tree[l].sum*=tree[now].mul;
+	tree[l].sum+=tree[now].tag*(tree[l].r-tree[l].l+1);
+	tree[l].sum%=p;
+	tree[r].sum*=tree[now].mul;
+	tree[r].sum+=tree[now].tag*(tree[r].r-tree[r].l+1);
+	tree[r].sum%=p;
+	tree[now].tag=0;tree[now].mul=1;
 }
 
-void update (int now,int l,int r,int c) {
-//	cout << now << ' ' << tree[now].l << ' ' << tree[now].r << ' ' << tree[now].sum << ' ' << tree[now].tag << endl;
+void add(int now,int l,int r,ll c) {
 	if (tree[now].l>=l&&tree[now].r<=r) {
-		tree[now].sum=c*(tree[now].r-tree[now].l+1);
-		tree[now].tag=c; 
+		tree[now].tag+=c;
+		tree[now].tag%=p;
+		tree[now].sum+=c*(tree[now].r-tree[now].l+1);
+		tree[now].sum%=p;
 	} else {
 		pushdown(now);
-		if (l<=(tree[now].l+tree[now].r)/2) 
-		    update(tree[now].lc,l,r,c);
+		if (l<=(tree[now].l+tree[now].r)/2)
+		    add(tree[now].lc,l,r,c);
 		if (r>(tree[now].l+tree[now].r)/2)
-		    update(tree[now].rc,l,r,c);
-		tree[now].sum=tree[tree[now].lc].sum+tree[tree[now].rc].sum;
+		    add(tree[now].rc,l,r,c);
+		tree[now].sum=(tree[tree[now].lc].sum+tree[tree[now].rc].sum)%p;
 	}
-//	cout << now << ' ' << tree[now].l << ' ' << tree[now].r << ' ' << tree[now].sum << ' ' << tree[now].tag << endl;
 }
 
-int findsum(int now,int l,int r) {
-//	cout << now << ' ' << tree[now].l << ' ' << tree[now].r << ' ' << tree[now].sum << ' ' << tree[now].tag << endl;
-	pushdown(now);
+void multiply(int now,int l,int r,ll c) {
+	if (tree[now].l>=l&&tree[now].r<=r) {
+		tree[now].tag*=c;
+		tree[now].tag%=p;
+		tree[now].mul*=c;
+		tree[now].mul%=p;
+		tree[now].sum*=c;
+		tree[now].sum%=p;
+	} else {
+		pushdown(now);
+		if (l<=(tree[now].l+tree[now].r)/2)
+		    multiply(tree[now].lc,l,r,c);
+		if (r>(tree[now].l+tree[now].r)/2)
+		    multiply(tree[now].rc,l,r,c);
+		tree[now].sum=(tree[tree[now].lc].sum+tree[tree[now].rc].sum)%p;
+	}
+}
+
+ll findsum(int now,int l,int r) {
+//	cout << now << ' ' << tree[now].l << ' ' << tree[now].r << ' ' << tree[now].sum << ' ' << tree[now].tag << ' ' << tree[now].mul << endl;
 	if (tree[now].l>=l&&tree[now].r<=r) {
 		return tree[now].sum;
 	} else {
-		int f=0;
-		if (l<=(tree[now].l+tree[now].r)/2) 
+		pushdown(now);
+		ll f=0;
+		if (l<=(tree[now].l+tree[now].r)/2)
 		    f=findsum(tree[now].lc,l,r);
 		if (r>(tree[now].l+tree[now].r)/2)
 		    f+=findsum(tree[now].rc,l,r);
-		return f;
+		return f%p;
 	}
+}
+
+int main() {
+	int n,m,l,op,r,k;
+	ll c;
+	scanf("%d%lld",&n,&p);
+	num=1;
+	build(1,1,n);
+	scanf("%d",&m);
+	for (k=1;k<=m;k++) {
+		scanf("%d",&op);
+		if (op==1) {
+			scanf("%d%d%lld",&l,&r,&c);
+			multiply(1,l,r,c);
+		} else if (op==2) {
+			scanf("%d%d%lld",&l,&r,&c);
+			add(1,l,r,c);
+		} else {
+			scanf("%d%d",&l,&r);
+			ll ans=findsum(1,l,r);
+			printf("%lld\n",ans);
+		}
+//		if (op!=3)
+//		for (int now=1;now<=num;now++)
+//		cout << now << ' ' << tree[now].l << ' ' << tree[now].r << ' ' << tree[now].sum << endl;
+	}
+	return 0;
 }

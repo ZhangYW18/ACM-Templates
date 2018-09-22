@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
     	Scanner in = new Scanner(System.in);
     	int cas;
-		int a[][]=new int [100][100];
+//		int a[][]=new int [100][100];
     	cas=in.nextInt();
     	while (cas!=0) {
             cas--;
